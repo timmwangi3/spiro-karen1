@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: spiro_karen
+      POSTGRES_USER: spiro
+      POSTGRES_PASSWORD: change-this-db-password
+    volumes:
+      - spiro_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spiro -d spiro_karen"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  app:
+    image: node:20-alpine
+    working_dir: /app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      DATABASE_URL: postgresql://spiro:change-this-db-password@db:5432/spiro_karen
+      JWT_SECRET: replace-with-a-random-32-plus-character-secret
+      CORS_ORIGIN: http://localhost:8080
+    command: sh -c "npm install --omit=dev && node server.js"
+    ports:
+      - "8080:8080"
+volumes:
+  spiro_pg:

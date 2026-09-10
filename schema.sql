@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS users(id text primary key,name text not null,email text unique not null,role text not null,password_hash text not null,created_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS customers(id text primary key,name text not null,phone text,email text,type text,notes text,created_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS products(id text primary key,sku text unique not null,name text not null,category text,price numeric not null default 0,stock numeric not null default 0,reorder numeric not null default 0,active boolean default true,created_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS stations(id text primary key,name text,location text,online boolean default true,slots int default 0,available int default 0,charging int default 0,created_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS batteries(id text primary key,serial text,station_id text,status text,soc numeric,soh numeric,temp numeric,cycles int default 0,updated_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS drivers(id text primary key,name text,phone text,wallet numeric default 0,status text default 'Active',created_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS tickets(id text primary key,customer text,phone text,type text,service text,amount numeric default 0,method text,station text,issued_at timestamptz default now(),expiry timestamptz,status text default 'ACTIVE',created_by text,used_at timestamptz,used_by text);
+CREATE TABLE IF NOT EXISTS sales(id text primary key,customer text,items jsonb,method text,amount numeric,status text,ticket_id text,cashier text,created_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS payments(id bigserial primary key,ref text unique,method text,amount numeric,status text,phone text,sale_id text,mpesa_receipt text,created_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS swaps(id text primary key,ticket_id text,driver_id text,station_id text,old_battery_id text,new_battery_id text,amount numeric,status text,created_at timestamptz default now());
+CREATE TABLE IF NOT EXISTS shifts(id text primary key,cashier text,cashier_id text,opened_at timestamptz,closed_at timestamptz,opening_cash numeric default 0,closing_cash numeric,status text);
+CREATE TABLE IF NOT EXISTS expenses(id text primary key,category text,description text,amount numeric,payment_method text,spent_at timestamptz,created_by text);
+CREATE TABLE IF NOT EXISTS audit(id text primary key,action text,entity text,entity_id text,user_email text,meta jsonb,created_at timestamptz default now());
+CREATE INDEX IF NOT EXISTS idx_audit_created on audit(created_at);
+CREATE INDEX IF NOT EXISTS idx_tickets_status on tickets(status); CREATE INDEX IF NOT EXISTS idx_sales_created on sales(created_at); CREATE INDEX IF NOT EXISTS idx_payments_created on payments(created_at); CREATE INDEX IF NOT EXISTS idx_batteries_station on batteries(station_id);
