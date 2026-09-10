@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spiro Karen | Business Management System</title>
+<style>
+:root{--bg:#0b1018;--panel:#121a25;--panel2:#172231;--line:#263446;--text:#eef4fb;--muted:#91a0b4;--red:#ef4444;--green:#22c55e;--yellow:#f59e0b;--blue:#3b82f6;--shadow:0 16px 45px rgba(0,0,0,.28)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}button{cursor:pointer}.app{display:flex;min-height:100vh}.sidebar{width:250px;background:#0e151f;border-right:1px solid var(--line);padding:18px 14px;position:fixed;left:0;top:0;bottom:0;z-index:20}.brand{display:flex;gap:10px;align-items:center;font-weight:800;font-size:20px;padding:8px 10px 22px}.logo{width:38px;height:38px;border-radius:11px;background:var(--red);display:grid;place-items:center;font-size:21px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:var(--muted);text-align:left;padding:12px 13px;border-radius:10px}.nav button:hover,.nav button.active{background:#1a2432;color:#fff}.nav button.active{box-shadow:inset 3px 0 var(--red)}.demo-badge{margin:18px 10px;padding:10px;border:1px dashed #46566c;border-radius:10px;color:#b8c5d6;font-size:12px;line-height:1.45}
+.main{margin-left:250px;width:calc(100% - 250px);padding:22px 28px}.topbar{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:22px}.topbar h1{margin:0;font-size:25px}.top-actions{display:flex;gap:9px;align-items:center}.search{background:var(--panel);border:1px solid var(--line);color:#fff;border-radius:9px;padding:10px 12px;width:240px}.btn{border:0;border-radius:9px;padding:10px 14px;background:var(--red);color:#fff;font-weight:700}.btn.secondary{background:#243144}.btn.success{background:#16803b}.btn.warning{background:#9a6508}.btn.danger{background:#8e2424}.btn.small{padding:7px 10px;font-size:12px}.menu-btn{display:none;background:var(--panel);border:1px solid var(--line);color:#fff;padding:9px;border-radius:8px}
+.page{display:none}.page.active{display:block}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px;box-shadow:var(--shadow)}.stat-label{color:var(--muted);font-size:13px}.stat-value{font-size:27px;font-weight:800;margin-top:7px}.stat-foot{font-size:12px;color:#9eb0c6;margin-top:6px}.green{color:var(--green)}.red{color:var(--red)}.yellow{color:var(--yellow)}.blue{color:#6ea8ff}
+.two{grid-template-columns:1.5fr 1fr}.three{grid-template-columns:repeat(3,1fr)}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.section-title h2{font-size:16px;margin:0}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;white-space:nowrap}.table th{color:#8fa0b4;font-weight:600}.pill{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:99px;font-size:11px;background:#263244}.pill.green{background:#12351f}.pill.red{background:#3a171a}.pill.yellow{background:#3a2b0e}.pill.blue{background:#132b4e}
+.station-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.station-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:15px}.station-head{display:flex;justify-content:space-between;gap:10px}.station-head h3{margin:0 0 4px;font-size:15px}.muted{color:var(--muted)}.slotbar{height:8px;background:#283447;border-radius:99px;overflow:hidden;margin:12px 0 8px}.slotfill{height:100%;background:var(--green)}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.mini{background:#101824;padding:9px;border-radius:8px}.mini b{display:block;font-size:15px}.mini span{font-size:10px;color:var(--muted)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.toolbar input,.toolbar select,.form input,.form select{background:#0d151f;border:1px solid var(--line);color:#fff;border-radius:8px;padding:9px}.toolbar input{min-width:210px}
+.alert{padding:12px;border-radius:9px;border:1px solid var(--line);margin-bottom:9px;background:#151e2a}.alert strong{display:block;margin-bottom:3px}.alert small{color:var(--muted)}
+.price{padding:19px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}.price h3{margin:0}.price .amount{font-size:27px;font-weight:800;margin:14px 0}.price input{width:100%;margin:5px 0 12px}
+.bars{display:flex;align-items:end;gap:9px;height:190px;padding:15px 6px}.barcol{flex:1;text-align:center;height:100%;display:flex;flex-direction:column;justify-content:end}.bar{background:var(--blue);border-radius:5px 5px 0 0;min-height:8px}.barcol span{font-size:10px;color:var(--muted);margin-top:6px}.settings{max-width:700px}.form{display:grid;gap:13px}.form label{display:grid;gap:6px;color:#aab8c9;font-size:13px}.form input,.form select{width:100%}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:50;place-items:center;padding:18px}.modal-bg.show{display:grid}.modal{background:#121b27;border:1px solid var(--line);border-radius:14px;width:min(600px,100%);max-height:90vh;overflow:auto;padding:20px}.modal h2{margin-top:0}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:17px}.toast{position:fixed;right:22px;bottom:22px;background:#172231;border:1px solid var(--line);padding:12px 15px;border-radius:10px;box-shadow:var(--shadow);display:none;z-index:80}.toast.show{display:block}.map{height:280px;background:radial-gradient(circle at 20% 35%,#23334a 0 1px,transparent 2px),linear-gradient(135deg,#111a25,#172536);background-size:28px 28px;border:1px solid var(--line);border-radius:12px;position:relative;overflow:hidden}.road{position:absolute;background:#2a394b;transform:rotate(-18deg);height:18px;width:120%;left:-10%;top:45%}.road.r2{transform:rotate(28deg);top:25%}.marker{position:absolute;width:15px;height:15px;background:var(--red);border:3px solid #ffd4d4;border-radius:50%;box-shadow:0 0 0 6px rgba(239,68,68,.14)}.marker.greenm{background:var(--green)}.map-label{position:absolute;background:#0b1018dd;border:1px solid var(--line);padding:7px 9px;border-radius:7px;font-size:11px}
+.driver-phone{width:290px;margin:auto;background:#070b11;border:8px solid #273244;border-radius:30px;padding:13px;min-height:540px}.phone-top{display:flex;justify-content:space-between;font-size:11px;color:#b9c5d5}.app-card{background:#121c29;border:1px solid #263446;border-radius:12px;padding:12px;margin-top:10px}.app-card h3{margin:0 0 5px}.phone-btn{width:100%;padding:11px;border:0;border-radius:10px;background:var(--red);color:white;font-weight:700;margin-top:9px}.wallet{font-size:24px;font-weight:800}.empty{text-align:center;color:var(--muted);padding:28px}
+
+.pos-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.75fr);gap:16px}.pos-products{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.product-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;transition:.15s}.product-card:hover{transform:translateY(-2px);border-color:#455872}.product-icon{width:44px;height:44px;border-radius:12px;background:#202d40;display:grid;place-items:center;font-size:21px;margin-bottom:10px}.product-card h3{font-size:14px;margin:0 0 4px}.product-price{font-size:18px;font-weight:800;margin-top:9px}.cart-list{display:grid;gap:8px;max-height:370px;overflow:auto}.cart-item{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;background:#101824;border:1px solid var(--line);padding:10px;border-radius:9px}.cart-controls{display:flex;align-items:center;gap:5px;margin-top:6px}.icon-btn{border:1px solid var(--line);background:#1b2636;color:#fff;border-radius:6px;width:27px;height:27px}.pos-cart{position:sticky;top:18px}.pos-total{border-top:1px solid var(--line);margin-top:13px;padding-top:13px}.total-row{display:flex;justify-content:space-between;margin:7px 0;color:#afbed0}.total-row.grand{font-size:20px;color:#fff;font-weight:800}.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.receipt{background:#fff;color:#151515;padding:17px;border-radius:4px;font-family:monospace;font-size:12px;line-height:1.45}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.station-grid,.three{grid-template-columns:1fr}.two{grid-template-columns:1fr}.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.menu-btn{display:block}.topbar{align-items:flex-start}.search{width:180px}}
+@media(max-width:620px){.main{padding:16px}.stats{grid-template-columns:1fr}.top-actions{flex-wrap:wrap}.search{order:3;width:100%}.topbar{flex-wrap:wrap}}
+</style>
+<link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#e3262e"></head>
+<body>
+<div id="apiStatus" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#111827;color:#d1fae5;border:1px solid #334155;border-radius:10px;padding:8px 12px;font-size:11px;box-shadow:0 8px 24px rgba(0,0,0,.3)">● Local demo mode</div>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="logo">⚡</div> Spiro Karen</div>
+  <div class="nav">
+    <button class="active" data-page="dashboard">▦ Dashboard</button>
+    <button data-page="stations">⌂ Stations</button>
+    <button data-page="batteries">▣ Batteries</button>
+    <button data-page="drivers">♙ Drivers</button>
+    <button data-page="swaps">⇄ Swap Transactions</button>
+    <button data-page="payments">▤ Payments</button>
+    <button data-page="pos">▰ POS</button>
+    <button data-page="tickets">🎟 Tickets</button>
+    <button data-page="pricing">◈ Pricing</button>
+    <button data-page="alerts">⚠ Alerts</button>
+    <button data-page="reports">▥ Reports</button>
+    <button data-page="driverapp">▱ Driver App</button>
+    <button data-page="hardware">▣ Hardware & Devices</button>
+    <button data-page="settings">⚙ Settings</button>
+  </div>
+  <div class="demo-badge"><b>BUSINESS SYSTEM</b><br>POS, tickets, inventory, swaps and payments are connected. M-Pesa becomes live when server credentials are configured.</div>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:10px"><button class="menu-btn" id="menuBtn">☰</button><div><h1 id="pageTitle">Dashboard</h1><div class="muted" style="font-size:12px">Battery swapping & business management system</div></div></div>
+    <div class="top-actions"><input class="search" id="globalSearch" placeholder="Search current page..."><button class="btn" onclick="openSwap()">+ New Swap</button></div>
+  </header>
+
+  <section class="page active" id="dashboard">
+    <div class="grid stats">
+      <div class="card"><div class="stat-label">Batteries</div><div class="stat-value" id="statBatteries">0</div><div class="stat-foot">Tracked assets</div></div>
+      <div class="card"><div class="stat-label">Stations</div><div class="stat-value" id="statStations">0</div><div class="stat-foot">Active locations</div></div>
+      <div class="card"><div class="stat-label">Today's Swaps</div><div class="stat-value" id="statSwaps">0</div><div class="stat-foot">Completed transactions</div></div>
+      <div class="card"><div class="stat-label">Revenue</div><div class="stat-value" id="statRevenue">KES 0</div><div class="stat-foot">Demo transaction value</div></div>
+    </div>
+    <div class="grid two" style="margin-top:16px">
+      <div class="card"><div class="section-title"><h2>Live Station Map</h2><span class="pill green">● Live simulation</span></div><div class="map" id="map"></div></div>
+      <div class="card"><div class="section-title"><h2>Alerts</h2><button class="btn small secondary" onclick="showPage('alerts')">View all</button></div><div id="dashAlerts"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><div class="section-title"><h2>Recent Swaps</h2><button class="btn small secondary" onclick="showPage('swaps')">All transactions</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Time</th><th>Driver</th><th>Station</th><th>Battery</th><th>Amount</th><th>Status</th></tr></thead><tbody id="dashSwaps"></tbody></table></div></div>
+  </section>
+
+  <section class="page" id="stations">
+    <div class="toolbar"><button class="btn" onclick="openStation()">+ Add Station</button><button class="btn secondary" onclick="simulateTelemetry()">Simulate Telemetry</button></div>
+    <div class="station-grid" id="stationCards"></div>
+  </section>
+
+  <section class="page" id="batteries">
+    <div class="toolbar"><input id="batteryFilter" placeholder="Search battery ID / station"><select id="batteryStatus"><option value="">All statuses</option><option>Available</option><option>Charging</option><option>In Use</option><option>Maintenance</option></select><button class="btn" onclick="openBattery()">+ Add Battery</button><button class="btn secondary" onclick="simulateTelemetry()">Simulate IoT</button></div>
+    <div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Station</th><th>Status</th><th>SoC</th><th>SoH</th><th>Temp</th><th>Cycles</th><th>Actions</th></tr></thead><tbody id="batteryRows"></tbody></table></div></div>
+  </section>
+
+  <section class="page" id="drivers">
+    <div class="toolbar"><input id="driverFilter" placeholder="Search driver"><button class="btn" onclick="openDriver()">+ Add Driver</button><button class="btn secondary" onclick="showToast('Driver QR identity check simulated.')">Simulate QR Identity</button></div>
+    <div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Driver</th><th>Phone</th><th>Wallet</th><th>Current Battery</th><th>Status</th><th>Actions</th></tr></thead><tbody id="driverRows"></tbody></table></div></div>
+  </section>
+
+  <section class="page" id="swaps">
+    <div class="toolbar"><button class="btn" onclick="openSwap()">+ Start Swap</button><button class="btn secondary" onclick="simulateQR()">Scan QR (Demo)</button></div>
+    <div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Time</th><th>Driver</th><th>Station</th><th>Old Battery</th><th>New Battery</th><th>Amount</th><th>Status</th></tr></thead><tbody id="swapRows"></tbody></table></div></div>
+  </section>
+
+  <section class="page" id="payments">
+    <div class="grid three">
+      <div class="card"><div class="stat-label">Wallet Balance (Demo)</div><div class="stat-value" id="walletTotal">KES 0</div><div class="stat-foot">Across drivers</div></div>
+      <div class="card"><div class="stat-label">Successful Payments</div><div class="stat-value" id="paidCount">0</div><div class="stat-foot">Simulated</div></div>
+      <div class="card"><div class="stat-label">Payment Gateway</div><div class="stat-value" style="font-size:19px">M-Pesa + Stripe</div><div class="stat-foot">Demo integrations</div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><div class="section-title"><h2>Payments</h2><button class="btn" onclick="openPayment()">+ Simulate Payment</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Time</th><th>Driver</th><th>Method</th><th>Reference</th><th>Amount</th><th>Status</th></tr></thead><tbody id="paymentRows"></tbody></table></div></div>
+  </section>
+
+  <section class="page" id="pricing">
+    <div class="grid three">
+      <div class="price"><h3>Pay Per Swap</h3><div class="amount">KES <input id="priceSwap" value="150" type="number"></div><div class="muted">Flat swap fee</div></div>
+      <div class="price"><h3>Per kWh</h3><div class="amount">KES <input id="priceKwh" value="45" type="number"></div><div class="muted">Energy-based pricing</div></div>
+      <div class="price"><h3>Monthly</h3><div class="amount">KES <input id="priceMonthly" value="3500" type="number"></div><div class="muted">Subscription plan</div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h2 style="font-size:16px">Pricing rules</h2><p class="muted">Use one or combine models. The demo uses the pay-per-swap amount when a new swap is completed.</p><button class="btn" onclick="savePricing()">Save Pricing</button></div>
+  </section>
+
+  <section class="page" id="alerts">
+    <div class="card"><div class="section-title"><h2>System Alerts</h2><button class="btn small secondary" onclick="simulateFault()">Generate Test Alert</button></div><div id="alertList"></div></div>
+  </section>
+
+  <section class="page" id="reports">
+    <div class="grid two">
+      <div class="card"><div class="section-title"><h2>7-Day Swap Volume</h2><button class="btn small secondary" onclick="exportCSV()">Export CSV</button></div><div class="bars" id="reportBars"></div></div>
+      <div class="card"><h2 style="font-size:16px">Operational Summary</h2><div id="reportSummary" class="muted" style="line-height:2"></div></div>
+    </div>
+  </section>
+
+  <section class="page" id="driverapp">
+    <div class="card" style="text-align:center"><h2 style="font-size:18px">Driver Mobile App Preview</h2><p class="muted">This simulated mobile workflow demonstrates station discovery, wallet balance, reservation and QR swap.</p><div class="driver-phone">
+      <div class="phone-top"><span>9:41</span><span>● ● ●</span></div>
+      <div style="font-size:20px;font-weight:800;text-align:left;margin-top:16px">Spiro Karen</div>
+      <div class="app-card" style="text-align:left"><div class="muted">Wallet balance</div><div class="wallet">KES <span id="phoneWallet">500</span></div><button class="phone-btn" onclick="openPayment()">Top Up Wallet</button></div>
+      <div class="app-card" style="text-align:left"><h3>Nearby Stations</h3><div id="phoneStations"></div></div>
+      <button class="phone-btn" onclick="simulateQR()">▣ Scan Station QR</button>
+    </div></div>
+  </section>
+
+
+  <section class="page" id="pos">
+    <div class="grid stats">
+      <div class="card"><div class="stat-label">Today's POS Sales</div><div class="stat-value" id="posSales">KES 0</div><div class="stat-foot">Completed demo sales</div></div>
+      <div class="card"><div class="stat-label">POS Transactions</div><div class="stat-value" id="posTxn">0</div><div class="stat-foot">Receipts issued</div></div>
+      <div class="card"><div class="stat-label">Cashier</div><div class="stat-value" style="font-size:20px">Admin</div><div class="stat-foot">Online</div></div>
+      <div class="card"><div class="stat-label">Payment Methods</div><div class="stat-value" style="font-size:17px">M-Pesa / Cash / Card</div><div class="stat-foot">Demo mode</div></div>
+    </div>
+    <div class="pos-layout" style="margin-top:16px">
+      <div>
+        <div class="card"><div class="section-title"><h2>Point of Sale</h2><span class="pill yellow">DEMO POS</span></div>
+          <div class="toolbar"><input id="posProductSearch" placeholder="Search products / services"><select id="posCategory"><option value="">All categories</option><option>Battery Swap</option><option>Service</option><option>Equipment</option><option>Training</option></select></div>
+          <div class="pos-products" id="posProducts"></div>
+        </div>
+        <div class="card" style="margin-top:16px"><div class="section-title"><h2>Recent POS Transactions</h2><button class="btn small secondary" onclick="clearPOSTransactions()">Clear History</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Time</th><th>Customer</th><th>Items</th><th>Method</th><th>Amount</th><th>Status</th></tr></thead><tbody id="posTxnRows"></tbody></table></div></div>
+      </div>
+      <div class="pos-cart">
+        <div class="card"><div class="section-title"><h2>Current Sale</h2><button class="btn small danger" onclick="clearCart()">Clear</button></div>
+          <div class="cart-list" id="cartList"></div><div class="empty" id="emptyCart">Cart is empty.<br>Tap a product to add it.</div>
+          <div class="pos-total"><div class="total-row"><span>Subtotal</span><span id="cartSubtotal">KES 0</span></div><div class="total-row"><span>Discount</span><span id="cartDiscount">KES 0</span></div><div class="total-row"><span>VAT / Tax</span><span id="cartTax">KES 0</span></div><div class="total-row grand"><span>Total</span><span id="cartTotal">KES 0</span></div></div>
+          <div class="quick-actions" style="margin-top:13px"><button class="btn secondary" onclick="setCustomer()">Customer</button><button class="btn secondary" onclick="holdSale()">Hold</button><button class="btn warning" onclick="applyDiscount()">Discount</button></div><button class="btn" style="width:100%;margin-top:9px" onclick="openPOSPayment()">Pay & Complete Sale</button>
+        </div>
+        <div class="card" style="margin-top:16px"><h2 style="font-size:15px;margin-top:0">POS Workflow</h2><div class="muted" style="line-height:1.9;font-size:12px">1. Select item<br>2. Adjust quantity<br>3. Choose customer<br>4. Select payment method<br>5. Complete sale<br>6. View / print receipt</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="tickets">
+    <div class="grid stats">
+      <div class="card"><div class="stat-label">Tickets Issued</div><div class="stat-value" id="ticketIssued">0</div><div class="stat-foot">All demo tickets</div></div>
+      <div class="card"><div class="stat-label">Active Tickets</div><div class="stat-value" id="ticketActive">0</div><div class="stat-foot">Ready for service</div></div>
+      <div class="card"><div class="stat-label">Used Tickets</div><div class="stat-value" id="ticketUsed">0</div><div class="stat-foot">Completed services</div></div>
+      <div class="card"><div class="stat-label">Ticket Revenue</div><div class="stat-value" id="ticketRevenue">KES 0</div><div class="stat-foot">Paid ticket value</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="section-title"><div><h2>Ticket Management</h2><div class="muted">Issue, print, verify and redeem Spiro Karen service tickets.</div></div><div class="quick-actions"><button class="btn" onclick="openTicketIssue()">+ Issue Ticket</button><button class="btn secondary" onclick="openTicketVerify()">✓ Verify Ticket</button></div></div>
+      <div class="toolbar"><input id="ticketSearch" placeholder="Search ticket, customer, phone, service..."><select id="ticketStatus"><option value="">All statuses</option><option>ACTIVE</option><option>USED</option><option>EXPIRED</option><option>CANCELLED</option></select><select id="ticketType"><option value="">All types</option><option>Battery Swap</option><option>Service</option><option>Training</option><option>Equipment</option><option>Delivery</option></select></div>
+      <div class="table-wrap"><table class="table"><thead><tr><th>Ticket</th><th>Customer</th><th>Service</th><th>Amount</th><th>Payment</th><th>Status</th><th>Expiry</th><th>Action</th></tr></thead><tbody id="ticketRows"></tbody></table></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h2 style="font-size:16px">Ticket Workflow</h2><div class="muted" style="line-height:2">1. Cashier creates sale in POS → 2. Payment is recorded → 3. Ticket number + QR are issued → 4. Driver presents ticket at station → 5. Staff verifies ticket → 6. Valid ticket authorizes service/swap → 7. Ticket becomes USED → 8. Receipt and transaction remain in history.</div></div>
+  </section>
+
+  <section class="page" id="hardware">
+    <div class="grid stats">
+      <div class="card"><div class="stat-label">Printers</div><div class="stat-value" id="hwPrinters">0</div><div class="stat-foot">Windows / network printers</div></div>
+      <div class="card"><div class="stat-label">Serial / USB Ports</div><div class="stat-value" id="hwSerial">0</div><div class="stat-foot">Detected ports</div></div>
+      <div class="card"><div class="stat-label">USB / Bluetooth Devices</div><div class="stat-value" id="hwDevices">0</div><div class="stat-foot">Present devices</div></div>
+      <div class="card"><div class="stat-label">Hardware Bridge</div><div class="stat-value" id="hwBridge">Checking...</div><div class="stat-foot">Desktop device service</div></div>
+    </div>
+    <div class="grid two" style="margin-top:16px">
+      <div class="card"><div class="section-title"><div><h2>Receipt Printer</h2><div class="muted">USB-installed Windows printer or LAN ESC/POS printer.</div></div><button class="btn" onclick="refreshHardware()">Refresh</button></div>
+        <div class="form"><label>Windows printer<select id="hwPrinterSelect"><option value="">Select detected printer</option></select></label><label>Network printer IP / hostname<input id="hwPrinterHost" placeholder="192.168.1.50"></label><label>Port<input id="hwPrinterPort" type="number" value="9100"></label></div>
+        <div class="quick-actions"><button class="btn" onclick="testWindowsPrint()">Test Windows Print</button><button class="btn secondary" onclick="testNetworkPrint()">Test LAN Print</button></div>
+      </div>
+      <div class="card"><div class="section-title"><div><h2>Cash Drawer</h2><div class="muted">Network ESC/POS pulse. USB drawers normally open through the receipt printer.</div></div></div>
+        <div class="form"><label>Network printer IP / hostname<input id="hwDrawerHost" placeholder="192.168.1.50"></label><label>Port<input id="hwDrawerPort" type="number" value="9100"></label></div>
+        <button class="btn warning" onclick="openNetworkDrawer()">Open Cash Drawer</button>
+      </div>
+    </div>
+    <div class="grid two" style="margin-top:16px">
+      <div class="card"><div class="section-title"><h2>USB / Serial</h2><span class="pill blue">Auto detected</span></div><div id="hwSerialList" class="muted">No ports loaded.</div></div>
+      <div class="card"><div class="section-title"><h2>USB / Bluetooth Devices</h2><span class="pill green">Windows PnP</span></div><div id="hwDeviceList" class="muted">No devices loaded.</div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><div class="section-title"><div><h2>Supported connection strategy</h2><div class="muted">USB scanners behave like keyboards; cameras use the browser camera; printers can use Windows spool or LAN ESC/POS; battery stations use LAN/Wi-Fi MQTT/HTTPS.</div></div></div><div class="muted" style="line-height:1.9">USB → local Windows drivers / serial bridge · LAN/Wi-Fi → TCP 9100 or station gateway · Bluetooth → Windows paired device / keyboard profile · Camera → browser permission · Battery station → authenticated MQTT/HTTPS gateway.</div></div>
+  </section>
+
+  <section class="page" id="settings">
+    <div class="card settings"><h2 style="font-size:17px">Platform Settings</h2><div class="form">
+      <label>Company Name<input id="companyName" value="Spiro Karen"></label>
+      <label>Currency<select id="currency"><option>KES</option><option>USD</option><option>EUR</option></select></label>
+      <label>MQTT Broker<input id="mqtt" value="mqtt://demo.local:1883"></label>
+      <label>Payment Gateway<select id="gateway"><option>M-Pesa + Stripe</option><option>M-Pesa</option><option>Stripe</option></select></label>
+      <label>Telemetry Interval (seconds)<input id="telemetry" type="number" value="4" min="1"></label>
+      <button class="btn" onclick="saveSettings()">Save Settings</button>
+    </div></div>
+  </section>
+</main>
+</div>
+
+<div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY='powerswap_demo_v2';
+const defaultData={
+ company:'Spiro Karen',currency:'KES',mqtt:'mqtt://demo.local:1883',gateway:'M-Pesa + Stripe',telemetry:4,
+ pricing:{swap:150,kwh:45,monthly:3500},
+ stations:[
+  {id:'ST-001',name:'Nairobi CBD',location:'Moi Avenue',slots:20,available:8,charging:10,online:true},
+  {id:'ST-002',name:'Westlands',location:'Waiyaki Way',slots:16,available:5,charging:9,online:true},
+  {id:'ST-003',name:'Industrial Area',location:'Enterprise Road',slots:24,available:13,charging:8,online:true}
+ ],
+ batteries:[
+  {id:'BAT-1001',station:'ST-001',status:'Available',soc:92,soh:98,temp:28,cycles:143},
+  {id:'BAT-1002',station:'ST-001',status:'Charging',soc:64,soh:97,temp:31,cycles:171},
+  {id:'BAT-1003',station:'ST-001',status:'Available',soc:87,soh:96,temp:29,cycles:209},
+  {id:'BAT-2001',station:'ST-002',status:'Available',soc:95,soh:99,temp:27,cycles:88},
+  {id:'BAT-2002',station:'ST-002',status:'Charging',soc:52,soh:95,temp:34,cycles:255},
+  {id:'BAT-3001',station:'ST-003',status:'Available',soc:90,soh:97,temp:29,cycles:121},
+  {id:'BAT-3002',station:'ST-003',status:'Maintenance',soc:31,soh:71,temp:36,cycles:612}
+ ],
+ drivers:[
+  {id:'DRV-001',name:'Brian Otieno',phone:'0712 000 111',wallet:800,battery:'BAT-1001',status:'Active'},
+  {id:'DRV-002',name:'Mary Wanjiku',phone:'0722 000 222',wallet:350,battery:'—',status:'Active'},
+  {id:'DRV-003',name:'Kevin Mwangi',phone:'0799 000 333',wallet:1200,battery:'—',status:'Active'},
+  {id:'DRV-004',name:'Amina Hassan',phone:'0700 000 444',wallet:90,battery:'—',status:'Low balance'}
+ ],
+ swaps:[
+  {time:'09:42',driver:'Brian Otieno',station:'Nairobi CBD',old:'BAT-0991',new:'BAT-1001',amount:150,status:'Completed'},
+  {time:'10:18',driver:'Mary Wanjiku',station:'Westlands',old:'BAT-1988',new:'BAT-2001',amount:150,status:'Completed'},
+  {time:'11:05',driver:'Kevin Mwangi',station:'Industrial Area',old:'BAT-2990',new:'BAT-3001',amount:150,status:'Completed'}
+ ],
+ payments:[
+  {time:'09:42',driver:'Brian Otieno',method:'Wallet',ref:'WAL-88321',amount:150,status:'Success'},
+  {time:'10:18',driver:'Mary Wanjiku',method:'M-Pesa',ref:'MPESA-72109',amount:150,status:'Success'},
+  {time:'11:05',driver:'Kevin Mwangi',method:'Card',ref:'CARD-12091',amount:150,status:'Success'}
+ ],
+ alerts:[
+  {type:'warning',title:'Battery BAT-2002 temperature elevated',text:'Temperature is 34°C. Monitor charging.'},
+  {type:'danger',title:'Battery BAT-3002 needs maintenance',text:'SoH is 71% and cycle count is high.'}
+ ],
+ posProducts:[
+  {id:'POS-001',name:'Battery Swap',category:'Battery Swap',price:150,icon:'🔋'},
+  {id:'POS-002',name:'Emergency Swap',category:'Battery Swap',price:250,icon:'⚡'},
+  {id:'POS-003',name:'Battery Inspection',category:'Service',price:500,icon:'🔧'},
+  {id:'POS-004',name:'Fire Extinguisher',category:'Equipment',price:3500,icon:'🧯'},
+  {id:'POS-005',name:'Safety Helmet',category:'Equipment',price:1800,icon:'⛑️'},
+  {id:'POS-006',name:'Reflective Vest',category:'Equipment',price:1200,icon:'🦺'},
+  {id:'POS-007',name:'Rider Safety Training',category:'Training',price:2500,icon:'🎓'},
+  {id:'POS-008',name:'Fleet Safety Training',category:'Training',price:8500,icon:'👥'},
+  {id:'POS-009',name:'Battery Delivery',category:'Service',price:800,icon:'🚚'}
+ ], posTransactions:[], posCustomer:'Walk-in Customer', posDiscount:0, tickets:[]
+};
+let data=load();
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(!s)return structuredClone(defaultData);const d={...structuredClone(defaultData),...s};d.pricing={...defaultData.pricing,...(s.pricing||{})};d.posProducts=s.posProducts||defaultData.posProducts;d.posTransactions=s.posTransactions||[];d.posCustomer=s.posCustomer||'Walk-in Customer';d.posDiscount=Number(s.posDiscount||0);d.tickets=s.tickets||[];return d}catch(e){return structuredClone(defaultData)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function money(n){return `${data.currency} ${Number(n||0).toLocaleString()}`}
+function stationName(id){return data.stations.find(s=>s.id===id)?.name||id}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2500)}
+function showPage(id){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
+ document.getElementById('pageTitle').textContent=document.querySelector(`button[data-page="${id}"]`)?.textContent.replace(/^[^\w]+/,'').trim()||id;
+ document.getElementById('globalSearch').value=''; render();
+ if(innerWidth<1000)document.getElementById('sidebar').classList.remove('open');
+}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+document.getElementById('menuBtn').onclick=()=>document.getElementById('sidebar').classList.toggle('open');
+
+function render(){
+ renderDashboard();renderStations();renderBatteries();renderDrivers();renderSwaps();renderPayments();renderAlerts();renderReports();renderPhone();if(document.getElementById('pos'))renderPOS();renderTickets();if(document.getElementById('hardware'))renderHardware();
+ document.getElementById('priceSwap').value=data.pricing.swap;document.getElementById('priceKwh').value=data.pricing.kwh;document.getElementById('priceMonthly').value=data.pricing.monthly;
+ document.getElementById('companyName').value=data.company;document.getElementById('currency').value=data.currency;document.getElementById('mqtt').value=data.mqtt;document.getElementById('gateway').value=data.gateway;document.getElementById('telemetry').value=data.telemetry;
+}
+function renderDashboard(){
+ document.getElementById('statBatteries').textContent=data.batteries.length;document.getElementById('statStations').textContent=data.stations.filter(s=>s.online).length;
+ document.getElementById('statSwaps').textContent=data.swaps.length;document.getElementById('statRevenue').textContent=money(data.swaps.reduce((a,x)=>a+Number(x.amount),0));
+ const alerts=data.alerts.slice(0,3);document.getElementById('dashAlerts').innerHTML=alerts.length?alerts.map(alertHTML).join(''):'<div class="empty">No active alerts</div>';
+ document.getElementById('dashSwaps').innerHTML=data.swaps.slice(-6).reverse().map(s=>`<tr><td>${s.time}</td><td>${s.driver}</td><td>${s.station}</td><td>${s.new}</td><td>${money(s.amount)}</td><td><span class="pill green">${s.status}</span></td></tr>`).join('');
+ const positions=[[18,38],[56,25],[72,67]];document.getElementById('map').innerHTML='<div class="road"></div><div class="road r2"></div>'+data.stations.map((s,i)=>`<div class="marker ${s.online?'greenm':''}" style="left:${positions[i%3][0]}%;top:${positions[i%3][1]}%"></div><div class="map-label" style="left:${positions[i%3][0]+2}%;top:${positions[i%3][1]-1}%">${s.name}<br><span class="muted">${s.online?'Online':'Offline'} · ${s.available} available</span></div>`).join('');
+}
+function alertHTML(a){return `<div class="alert"><strong class="${a.type==='danger'?'red':'yellow'}">${a.type==='danger'?'●':'▲'} ${a.title}</strong><small>${a.text}</small></div>`}
+function renderStations(){document.getElementById('stationCards').innerHTML=data.stations.map(s=>`<div class="station-card"><div class="station-head"><div><h3>${s.name}</h3><div class="muted">${s.location} · ${s.id}</div></div><span class="pill ${s.online?'green':'red'}">${s.online?'Online':'Offline'}</span></div><div class="slotbar"><div class="slotfill" style="width:${Math.min(100,s.available/s.slots*100)}%"></div></div><div class="muted" style="font-size:11px">${s.available}/${s.slots} ready slots</div><div class="mini-grid"><div class="mini"><b>${s.available}</b><span>Available</span></div><div class="mini"><b>${s.charging}</b><span>Charging</span></div><div class="mini"><b>${s.slots-s.available-s.charging}</b><span>Empty</span></div></div><div style="margin-top:12px;display:flex;gap:7px"><button class="btn small secondary" onclick="openStation('${s.id}')">Edit</button><button class="btn small ${s.online?'warning':'success'}" onclick="toggleStation('${s.id}')">${s.online?'Offline':'Online'}</button><button class="btn small danger" onclick="deleteStation('${s.id}')">Delete</button></div></div>`).join('')}
+function renderBatteries(){
+ const q=(document.getElementById('batteryFilter')?.value||'').toLowerCase(),st=document.getElementById('batteryStatus')?.value||'';
+ const rows=data.batteries.filter(b=>(!q||(b.id+' '+stationName(b.station)).toLowerCase().includes(q))&&(!st||b.status===st));
+ document.getElementById('batteryRows').innerHTML=rows.map(b=>`<tr><td><b>${b.id}</b></td><td>${stationName(b.station)}</td><td><span class="pill ${b.status==='Available'?'green':b.status==='Charging'?'blue':b.status==='Maintenance'?'red':'yellow'}">${b.status}</span></td><td><b>${b.soc}%</b></td><td>${b.soh}%</td><td class="${b.temp>=35?'red':''}">${b.temp}°C</td><td>${b.cycles}</td><td><button class="btn small secondary" onclick="openBattery('${b.id}')">Edit</button> <button class="btn small danger" onclick="deleteBattery('${b.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan="8" class="empty">No batteries found</td></tr>';
+}
+function renderDrivers(){
+ const q=(document.getElementById('driverFilter')?.value||'').toLowerCase();const rows=data.drivers.filter(d=>(d.name+' '+d.phone+' '+d.id).toLowerCase().includes(q));
+ document.getElementById('driverRows').innerHTML=rows.map(d=>`<tr><td><b>${d.name}</b><br><span class="muted">${d.id}</span></td><td>${d.phone}</td><td>${money(d.wallet)}</td><td>${d.battery}</td><td><span class="pill ${d.status==='Active'?'green':'yellow'}">${d.status}</span></td><td><button class="btn small secondary" onclick="openDriver('${d.id}')">Edit</button> <button class="btn small danger" onclick="deleteDriver('${d.id}')">Delete</button></td></tr>`).join('');
+ document.getElementById('walletTotal').textContent=money(data.drivers.reduce((a,d)=>a+d.wallet,0));document.getElementById('phoneWallet').textContent=data.drivers[0]?.wallet||0;
+}
+function renderSwaps(){document.getElementById('swapRows').innerHTML=data.swaps.slice().reverse().map(s=>`<tr><td>${s.time}</td><td>${s.driver}</td><td>${s.station}</td><td>${s.old}</td><td>${s.new}</td><td>${money(s.amount)}</td><td><span class="pill green">${s.status}</span></td></tr>`).join('')}
+function renderPayments(){document.getElementById('paymentRows').innerHTML=data.payments.slice().reverse().map(p=>`<tr><td>${p.time}</td><td>${p.driver}</td><td>${p.method}</td><td>${p.ref}</td><td>${money(p.amount)}</td><td><span class="pill green">${p.status}</span></td></tr>`).join('');document.getElementById('paidCount').textContent=data.payments.filter(p=>p.status==='Success').length}
+function renderAlerts(){document.getElementById('alertList').innerHTML=data.alerts.length?data.alerts.map((a,i)=>alertHTML(a)+`<button class="btn small secondary" style="margin:-3px 0 10px" onclick="dismissAlert(${i})">Dismiss</button>`).join(''):'<div class="empty">No active alerts</div>'}
+function renderReports(){const vals=[Math.max(1,data.swaps.length-4),Math.max(2,data.swaps.length-2),Math.max(1,data.swaps.length-3),data.swaps.length+1,data.swaps.length+2,data.swaps.length+3,data.swaps.length+4];const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];document.getElementById('reportBars').innerHTML=vals.map((v,i)=>`<div class="barcol"><div class="bar" style="height:${Math.min(100,v*12)}%"></div><span>${days[i]}<br>${v}</span></div>`).join('');document.getElementById('reportSummary').innerHTML=`Total swaps: <b>${data.swaps.length}</b><br>Total demo revenue: <b>${money(data.swaps.reduce((a,x)=>a+x.amount,0))}</b><br>Active batteries: <b>${data.batteries.filter(b=>b.status==='Available').length}</b><br>Maintenance batteries: <b>${data.batteries.filter(b=>b.status==='Maintenance').length}</b><br>Online stations: <b>${data.stations.filter(s=>s.online).length}/${data.stations.length}</b>`}
+function renderPhone(){document.getElementById('phoneStations').innerHTML=data.stations.slice(0,3).map(s=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #263446;font-size:12px"><span>${s.name}<br><small class="muted">${s.location}</small></span><b class="${s.available?'green':'red'}">${s.available} ready</b></div>`).join('')}
+
+function openModal(title,body){document.getElementById('modal').innerHTML=`<h2>${title}</h2>${body}`;document.getElementById('modalBg').classList.add('show')}
+function closeModal(){document.getElementById('modalBg').classList.remove('show')}
+document.getElementById('modalBg').onclick=e=>{if(e.target.id==='modalBg')closeModal()}
+
+function openStation(id=''){
+ const s=data.stations.find(x=>x.id===id)||{id:'',name:'',location:'',slots:20,available:10,charging:8,online:true};
+ openModal(id?'Edit Station':'Add Station',`<div class="form">
+ <label>Station ID<input id="mSid" value="${s.id}" ${id?'readonly':''}></label><label>Name<input id="mSname" value="${s.name}"></label><label>Location<input id="mSloc" value="${s.location}"></label><label>Total Slots<input id="mSlots" type="number" value="${s.slots}"></label><label>Available Batteries<input id="mAvail" type="number" value="${s.available}"></label><label>Charging<input id="mCharge" type="number" value="${s.charging}"></label>
+ </div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveStation('${id}')">Save</button></div>`);
+}
+function saveStation(id){const obj={id:document.getElementById('mSid').value.trim(),name:document.getElementById('mSname').value.trim(),location:document.getElementById('mSloc').value.trim(),slots:+document.getElementById('mSlots').value,available:+document.getElementById('mAvail').value,charging:+document.getElementById('mCharge').value,online:true};if(!obj.id||!obj.name)return showToast('Station ID and name are required');if(id)Object.assign(data.stations.find(x=>x.id===id),obj);else data.stations.push(obj);save();closeModal();render();showToast('Station saved')}
+function toggleStation(id){const s=data.stations.find(x=>x.id===id);s.online=!s.online;save();render();showToast(`${s.name} is now ${s.online?'online':'offline'}`)}
+function deleteStation(id){if(!confirm('Delete this demo station?'))return;data.stations=data.stations.filter(s=>s.id!==id);data.batteries=data.batteries.filter(b=>b.station!==id);save();render();showToast('Station deleted')}
+
+function openBattery(id=''){const b=data.batteries.find(x=>x.id===id)||{id:'',station:data.stations[0]?.id||'',status:'Available',soc:90,soh:98,temp:28,cycles:0};openModal(id?'Edit Battery':'Add Battery',`<div class="form"><label>Battery ID<input id="mBid" value="${b.id}" ${id?'readonly':''}></label><label>Station<select id="mBstation">${data.stations.map(s=>`<option value="${s.id}" ${s.id===b.station?'selected':''}>${s.name}</option>`).join('')}</select></label><label>Status<select id="mBstatus">${['Available','Charging','In Use','Maintenance'].map(x=>`<option ${x===b.status?'selected':''}>${x}</option>`).join('')}</select></label><label>SoC %<input id="mBsoc" type="number" min="0" max="100" value="${b.soc}"></label><label>SoH %<input id="mBsoh" type="number" min="0" max="100" value="${b.soh}"></label><label>Temperature °C<input id="mBtemp" type="number" value="${b.temp}"></label><label>Cycle Count<input id="mBcycles" type="number" value="${b.cycles}"></label></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveBattery('${id}')">Save</button></div>`)}
+function saveBattery(id){const obj={id:document.getElementById('mBid').value.trim(),station:document.getElementById('mBstation').value,status:document.getElementById('mBstatus').value,soc:+document.getElementById('mBsoc').value,soh:+document.getElementById('mBsoh').value,temp:+document.getElementById('mBtemp').value,cycles:+document.getElementById('mBcycles').value};if(!obj.id)return showToast('Battery ID required');if(id)Object.assign(data.batteries.find(x=>x.id===id),obj);else data.batteries.push(obj);save();closeModal();render();showToast('Battery saved')}
+function deleteBattery(id){if(!confirm('Delete this demo battery?'))return;data.batteries=data.batteries.filter(b=>b.id!==id);save();render();showToast('Battery deleted')}
+
+function openDriver(id=''){const d=data.drivers.find(x=>x.id===id)||{id:'',name:'',phone:'',wallet:500,battery:'—',status:'Active'};openModal(id?'Edit Driver':'Add Driver',`<div class="form"><label>Driver ID<input id="mDid" value="${d.id}" ${id?'readonly':''}></label><label>Name<input id="mDname" value="${d.name}"></label><label>Phone<input id="mDphone" value="${d.phone}"></label><label>Wallet Balance<input id="mDwallet" type="number" value="${d.wallet}"></label><label>Status<select id="mDstatus"><option ${d.status==='Active'?'selected':''}>Active</option><option ${d.status==='Low balance'?'selected':''}>Low balance</option><option ${d.status==='Suspended'?'selected':''}>Suspended</option></select></label></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveDriver('${id}')">Save</button></div>`)}
+function saveDriver(id){const obj={id:document.getElementById('mDid').value.trim(),name:document.getElementById('mDname').value.trim(),phone:document.getElementById('mDphone').value.trim(),wallet:+document.getElementById('mDwallet').value,status:document.getElementById('mDstatus').value,battery:data.drivers.find(x=>x.id===id)?.battery||'—'};if(!obj.id||!obj.name)return showToast('Driver ID and name are required');if(id)Object.assign(data.drivers.find(x=>x.id===id),obj);else data.drivers.push(obj);save();closeModal();render();showToast('Driver saved')}
+function deleteDriver(id){if(!confirm('Delete this demo driver?'))return;data.drivers=data.drivers.filter(d=>d.id!==id);save();render();showToast('Driver deleted')}
+
+function openSwap(){
+ const drivers=data.drivers.filter(d=>d.status!=='Suspended');const stations=data.stations.filter(s=>s.online&&s.available>0);if(!drivers.length||!stations.length)return showToast('Need an active driver and station');
+ openModal('New Battery Swap',`<div class="form"><label>Driver<select id="mSwapDriver">${drivers.map(d=>`<option value="${d.id}">${d.name} · ${money(d.wallet)}</option>`).join('')}</select></label><label>Station<select id="mSwapStation">${stations.map(s=>`<option value="${s.id}">${s.name} · ${s.available} ready</option>`).join('')}</select></label><label>Old Battery ID<input id="mOld" value="BAT-OLD-DEMO"></label><label>New Battery<select id="mNew">${data.batteries.filter(b=>b.status==='Available'&&b.soc>=50).map(b=>`<option value="${b.id}">${b.id} · ${b.soc}% SoC</option>`).join('')}</select></label><label>Price<input id="mAmount" type="number" value="${data.pricing.swap}"></label></div><div class="alert" style="margin-top:12px"><strong>QR authentication</strong><small>The driver's identity and station QR are simulated before authorization.</small></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="confirmSwap()">Authorize & Complete Swap</button></div>`)
+}
+function confirmSwap(){
+ const d=data.drivers.find(x=>x.id===document.getElementById('mSwapDriver').value),s=data.stations.find(x=>x.id===document.getElementById('mSwapStation').value),newId=document.getElementById('mNew').value,amount=+document.getElementById('mAmount').value,b=data.batteries.find(x=>x.id===newId);
+ if(d.wallet<amount)return showToast('Insufficient demo wallet balance');
+ d.wallet-=amount;d.battery=newId;s.available=Math.max(0,s.available-1);data.batteries.filter(x=>x.station===s.id&&x.status==='In Use').forEach(x=>x.status='Charging');if(b)b.status='In Use';
+ const now=new Date();const time=now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});data.swaps.push({time,driver:d.name,station:s.name,old:document.getElementById('mOld').value,new:newId,amount,status:'Completed'});data.payments.push({time,driver:d.name,method:'Wallet',ref:'SWAP-'+Math.floor(Math.random()*90000+10000),amount,status:'Success'});save();closeModal();render();showToast('Swap completed successfully')}
+function simulateQR(){showToast('QR scanned ✓ Driver and station authenticated');setTimeout(()=>openSwap(),500)}
+function openPayment(){openModal('Simulate Payment',`<div class="form"><label>Driver<select id="mPayDriver">${data.drivers.map(d=>`<option value="${d.id}">${d.name}</option>`).join('')}</select></label><label>Method<select id="mPayMethod"><option>M-Pesa</option><option>Card / Stripe</option><option>Wallet</option></select></label><label>Amount<input id="mPayAmount" type="number" value="500"></label><label>Phone (M-Pesa demo)<input id="mPayPhone" value="0712 000 111"></label></div><div class="alert"><strong>Demo only</strong><small>No real M-Pesa, card or bank transaction will be submitted.</small></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="confirmPayment()">Process Demo Payment</button></div>`)}
+function confirmPayment(){const d=data.drivers.find(x=>x.id===document.getElementById('mPayDriver').value),amount=+document.getElementById('mPayAmount').value,method=document.getElementById('mPayMethod').value;d.wallet+=amount;const time=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});data.payments.push({time,driver:d.name,method,ref:(method==='M-Pesa'?'MPESA-':'PAY-')+Math.floor(Math.random()*90000+10000),amount,status:'Success'});save();closeModal();render();showToast(`${method} demo payment successful`)}
+
+
+let posCart=[];
+function renderPOS(){const q=(document.getElementById('posProductSearch')?.value||'').toLowerCase(),cat=document.getElementById('posCategory')?.value||'';const ps=(data.posProducts||[]).filter(p=>(!q||(`${p.name} ${p.category}`).toLowerCase().includes(q))&&(!cat||p.category===cat));document.getElementById('posProducts').innerHTML=ps.map(p=>`<div class="product-card" onclick="addToCart('${p.id}')"><div class="product-icon">${p.icon}</div><h3>${p.name}</h3><small>${p.category}</small><div class="product-price">${money(p.price)}</div></div>`).join('');const cl=document.getElementById('cartList'),em=document.getElementById('emptyCart');if(!posCart.length){cl.innerHTML='';em.style.display='block'}else{em.style.display='none';cl.innerHTML=posCart.map((x,i)=>`<div class="cart-item"><div><b>${x.name}</b><div class="muted">${money(x.price)} each</div><div class="cart-controls"><button class="icon-btn" onclick="changeCartQty(${i},-1)">−</button><span>${x.qty}</span><button class="icon-btn" onclick="changeCartQty(${i},1)">+</button></div></div><b>${money(x.price*x.qty)}</b></div>`).join('')}const sub=posCart.reduce((a,x)=>a+x.price*x.qty,0),disc=Math.min(sub,Math.max(0,Number(data.posDiscount||0))),tax=Math.round((sub-disc)*.16),total=Math.max(0,sub-disc)+tax;document.getElementById('cartSubtotal').textContent=money(sub);document.getElementById('cartDiscount').textContent=money(disc);document.getElementById('cartTax').textContent=money(tax);document.getElementById('cartTotal').textContent=money(total);document.getElementById('posSales').textContent=money((data.posTransactions||[]).reduce((a,x)=>a+x.amount,0));document.getElementById('posTxn').textContent=(data.posTransactions||[]).length;document.getElementById('posTxnRows').innerHTML=(data.posTransactions||[]).slice().reverse().map(t=>`<tr><td>${t.time}</td><td>${t.customer}</td><td>${t.item}</td><td>${t.method}</td><td>${money(t.amount)}</td><td><span class="pill green">${t.status}</span></td></tr>`).join('')||'<tr><td colspan="6" class="empty">No POS transactions yet</td></tr>'}
+function addToCart(id){const p=data.posProducts.find(x=>x.id===id);if(!p)return;const x=posCart.find(a=>a.id===id);if(x)x.qty++;else posCart.push({id:p.id,name:p.name,category:p.category,price:p.price,qty:1});renderPOS();showToast(`${p.name} added to cart`)}
+function changeCartQty(i,d){if(!posCart[i])return;posCart[i].qty+=d;if(posCart[i].qty<=0)posCart.splice(i,1);renderPOS()}
+function clearCart(){posCart=[];data.posDiscount=0;save();renderPOS();showToast('Cart cleared')}
+function setCustomer(){openModal('Customer',`<div class="form"><label>Customer / Driver<input id="mPosCustomer" value="${data.posCustomer}"></label></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="savePOSCustomer()">Save</button></div>`)}
+function savePOSCustomer(){data.posCustomer=document.getElementById('mPosCustomer').value.trim()||'Walk-in Customer';save();closeModal();showToast('Customer updated')}
+function applyDiscount(){openModal('Discount',`<div class="form"><label>Discount (${data.currency})<input id="mPosDiscount" type="number" min="0" value="${data.posDiscount||0}"></label></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="savePOSDiscount()">Apply</button></div>`)}
+function savePOSDiscount(){data.posDiscount=Math.max(0,+document.getElementById('mPosDiscount').value||0);save();closeModal();renderPOS();showToast('Discount applied')}
+function holdSale(){if(!posCart.length)return showToast('Cart is empty');showToast(`Sale held for ${data.posCustomer}`)}
+function openPOSPayment(){if(!posCart.length)return showToast('Add an item first');const sub=posCart.reduce((a,x)=>a+x.price*x.qty,0),disc=Math.min(sub,Math.max(0,Number(data.posDiscount||0))),tax=Math.round((sub-disc)*.16),total=Math.max(0,sub-disc)+tax;openModal('Complete POS Sale',`<div class="form"><label>Customer<input id="mPOSPayCustomer" value="${data.posCustomer}"></label><label>Payment Method<select id="mPOSPayMethod"><option>M-Pesa</option><option>Cash</option><option>Card / Stripe</option><option>Driver Wallet</option></select></label><label>Amount<input id="mPOSPayAmount" type="number" value="${total}"></label></div><div class="alert"><strong>Demo payment</strong><small>No real payment is submitted.</small></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="completePOSSale()">Complete Sale</button></div>`)}
+function completePOSSale(){const customer=document.getElementById('mPOSPayCustomer').value.trim()||'Walk-in Customer',method=document.getElementById('mPOSPayMethod').value,amount=+document.getElementById('mPOSPayAmount').value,time=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),items=posCart.map(x=>`${x.name} x${x.qty}`).join(', ');data.posTransactions.push({time,customer,item:items,method,amount,status:'Paid'});const swap=posCart.find(x=>x.category==='Battery Swap');if(swap){const d=data.drivers.find(x=>x.name===customer)||data.drivers[0],st=data.stations.find(x=>x.online)||data.stations[0];if(d&&method==='Driver Wallet'&&d.wallet>=amount)d.wallet-=amount;data.swaps.push({time,driver:d?.name||customer,station:st?.name||'POS',old:'POS-SALE',new:'POS-SWAP',amount,status:'Completed'});}const ticketNeeded=posCart.some(x=>['Battery Swap','Service','Training','Equipment','Delivery'].includes(x.category));let issued=null;if(ticketNeeded){issued=createTicket({customer,method,amount,service:items,type:swap?'Battery Swap':(posCart[0]?.category||'Service')});}posCart=[];data.posDiscount=0;data.posCustomer='Walk-in Customer';save();closeModal();render();showToast(issued?`Sale completed • Ticket ${issued.id}`:'POS sale completed');showReceipt({time,customer,item:items,method,amount,ticket:issued?.id});if(issued)setTimeout(()=>showTicket(issued.id),150)}
+let lastReceipt=null;
+async function printReceiptNow(){if(!lastReceipt)return showToast('No receipt loaded');if(window.spiroHardware){const printer=document.getElementById('hwPrinterSelect')?.value;const text=['SPIRO KAREN','POS RECEIPT','------------------------------',new Date().toLocaleString(),`Customer: ${lastReceipt.customer}`,lastReceipt.item,'------------------------------',`TOTAL: ${money(lastReceipt.amount)}`,`Paid by: ${lastReceipt.method}`,lastReceipt.ticket?`Ticket: ${lastReceipt.ticket}`:'','Thank you'].filter(Boolean);try{if(printer)await window.spiroHardware.printWindows(printer,text.join('\n'));else{const host=document.getElementById('hwPrinterHost')?.value?.trim();if(host)await window.spiroHardware.printNetwork(host,+document.getElementById('hwPrinterPort').value||9100,text);else return showToast('Configure a printer in Hardware & Devices')}showToast('Receipt printed');return}catch(e){showToast('Hardware print failed: '+e.message);return}}window.print()}
+function showReceipt(t){lastReceipt=t;openModal('Receipt',`<div class="receipt"><div style="text-align:center;font-weight:800;font-size:16px">${data.company}</div><div style="text-align:center">POS RECEIPT</div><hr>${new Date().toLocaleDateString()} ${t.time}<br>Customer: ${t.customer}<br><br>${t.item.replaceAll(', ','<br>')}<hr><b>TOTAL: ${money(t.amount)}</b><br>Paid by: ${t.method}<br>Status: PAID${t.ticket?`<br>Ticket: <b>${t.ticket}</b>`:''}<hr><div style="text-align:center">Thank you</div></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Close</button><button class="btn" onclick="printReceiptNow()">Print</button></div>`)}
+function clearPOSTransactions(){if(!confirm('Clear demo POS transaction history?'))return;data.posTransactions=[];save();renderPOS();showToast('POS history cleared')}
+
+function ticketId(){const d=new Date(),stamp=`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;const n=(data.tickets||[]).length+1;return `SK-${stamp}-${String(n).padStart(4,'0')}`}
+function qrSvg(id){let h=0;for(let i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i))>>>0;let cells='';for(let y=0;y<21;y++)for(let x=0;x<21;x++){const on=((h=Math.imul(h^((x+1)*374761393+(y+1)*668265263),1274126177))>>>29)&1; if(on)cells+=`<rect x="${x}" y="${y}" width="1" height="1"/>`;}return `<svg viewBox="0 0 21 21" width="150" height="150" xmlns="http://www.w3.org/2000/svg" aria-label="Demo QR"><rect width="21" height="21" fill="white"/><g fill="black">${cells}<rect x="1" y="1" width="5" height="5"/><rect x="2" y="2" width="3" height="3" fill="white"/><rect x="3" y="3" width="1" height="1"/><rect x="15" y="1" width="5" height="5"/><rect x="16" y="2" width="3" height="3" fill="white"/><rect x="17" y="3" width="1" height="1"/><rect x="1" y="15" width="5" height="5"/><rect x="2" y="16" width="3" height="3" fill="white"/><rect x="3" y="17" width="1" height="1"/></g></svg>`}
+function createTicket(o){const now=new Date(),exp=new Date(now.getTime()+24*60*60*1000),t={id:ticketId(),customer:o.customer||'Walk-in Customer',phone:o.phone||'',type:o.type||'Service',service:o.service||'Service',amount:Number(o.amount||0),method:o.method||'Cash',station:o.station||'Any Station',issued:now.toLocaleString(),expiry:exp.toISOString(),status:'ACTIVE',createdBy:'Demo Cashier'};(data.tickets||(data.tickets=[])).push(t);save();return t}
+function ticketStatus(t){if(t.status==='ACTIVE'&&new Date(t.expiry)<new Date()){t.status='EXPIRED';save()}return t.status}
+function renderTickets(){const ts=data.tickets||[],active=ts.filter(t=>ticketStatus(t)==='ACTIVE').length,used=ts.filter(t=>t.status==='USED').length;document.getElementById('ticketIssued').textContent=ts.length;document.getElementById('ticketActive').textContent=active;document.getElementById('ticketUsed').textContent=used;document.getElementById('ticketRevenue').textContent=money(ts.reduce((a,t)=>a+Number(t.amount||0),0));const q=(document.getElementById('ticketSearch')?.value||'').toLowerCase(),st=document.getElementById('ticketStatus')?.value||'',ty=document.getElementById('ticketType')?.value||'';const rows=ts.slice().reverse().filter(t=>(!q||`${t.id} ${t.customer} ${t.phone} ${t.service}`.toLowerCase().includes(q))&&(!st||ticketStatus(t)===st)&&(!ty||t.type===ty));document.getElementById('ticketRows').innerHTML=rows.map(t=>`<tr><td><b>${t.id}</b></td><td>${t.customer}<br><small>${t.phone||''}</small></td><td>${t.service}</td><td>${money(t.amount)}</td><td>${t.method}</td><td><span class="pill ${ticketStatus(t)==='ACTIVE'?'green':ticketStatus(t)==='USED'?'blue':'yellow'}">${ticketStatus(t)}</span></td><td>${new Date(t.expiry).toLocaleString()}</td><td><button class="btn small secondary" onclick="showTicket('${t.id}')">View</button> <button class="btn small" onclick="verifyTicket('${t.id}')">Verify</button></td></tr>`).join('')||'<tr><td colspan="8" class="empty">No tickets found</td></tr>'}
+function openTicketIssue(pref={}){openModal('Issue Ticket',`<div class="form"><label>Customer / Driver<input id="tCustomer" value="${pref.customer||data.posCustomer||'Walk-in Customer'}"></label><label>Phone<input id="tPhone" value="${pref.phone||''}" placeholder="07xx xxx xxx"></label><label>Ticket Type<select id="tType"><option>Battery Swap</option><option>Service</option><option>Training</option><option>Equipment</option><option>Delivery</option></select></label><label>Service / Product<input id="tService" value="${pref.service||'Battery Swap'}"></label><label>Amount (KES)<input id="tAmount" type="number" value="${pref.amount||150}"></label><label>Payment Method<select id="tMethod"><option>M-Pesa</option><option>Cash</option><option>Card / Stripe</option><option>Driver Wallet</option></select></label><label>Station<input id="tStation" value="Any Station"></label></div><div class="alert"><strong>Ticket validity: 24 hours</strong><small>A unique ticket number and demo QR will be generated.</small></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveIssuedTicket()">Issue Ticket</button></div>`)}
+function saveIssuedTicket(){const t=createTicket({customer:document.getElementById('tCustomer').value,phone:document.getElementById('tPhone').value,type:document.getElementById('tType').value,service:document.getElementById('tService').value,amount:+document.getElementById('tAmount').value,method:document.getElementById('tMethod').value,station:document.getElementById('tStation').value});closeModal();renderTickets();showToast(`Ticket ${t.id} issued`);showTicket(t.id)}
+let lastTicket=null;
+async function printTicketNow(){if(!lastTicket)return showToast('No ticket loaded');const t=lastTicket;const lines=['SPIRO KAREN','SERVICE TICKET','------------------------------',t.id,t.service,`Customer: ${t.customer}`,t.phone?`Phone: ${t.phone}`:'',`Amount: ${money(t.amount)}`,`Paid by: ${t.method}`,`Status: ${t.status}`,`Valid until: ${new Date(t.expiry).toLocaleString()}`,'------------------------------','Present this ticket at the station.'].filter(Boolean);if(window.spiroHardware){const printer=document.getElementById('hwPrinterSelect')?.value;try{if(printer)await window.spiroHardware.printWindows(printer,lines.join('\n'));else{const host=document.getElementById('hwPrinterHost')?.value?.trim();if(!host)return showToast('Configure a printer in Hardware & Devices');await window.spiroHardware.printNetwork(host,+document.getElementById('hwPrinterPort').value||9100,lines)}showToast('Ticket printed');return}catch(e){return showToast('Hardware print failed: '+e.message)}}window.print()}
+function showTicket(id){const t=(data.tickets||[]).find(x=>x.id===id);lastTicket=t;if(!t)return showToast('Ticket not found');ticketStatus(t);openModal('Ticket '+t.id,`<div class="receipt" style="text-align:center"><div style="font-size:18px;font-weight:800">${data.company}</div><div style="font-size:12px">SERVICE TICKET</div><hr><h2 style="letter-spacing:1px">${t.id}</h2>${qrSvg(t.id)}<p><b>${t.service}</b><br>${t.customer}<br>${t.phone||''}</p><p>${money(t.amount)} • ${t.method}<br>Status: <b>${t.status}</b><br>Valid until: ${new Date(t.expiry).toLocaleString()}</p></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Close</button>${t.status==='ACTIVE'?`<button class="btn warning" onclick="useTicket('${t.id}')">Use Ticket</button>`:''}<button class="btn" onclick="printTicketNow()">Print</button></div>`)}
+function openTicketVerify(){openModal('Verify Ticket',`<div class="form"><label>Ticket Number<input id="verifyId" placeholder="SK-20260908-0001"></label></div><div class="alert"><strong>Demo scanner</strong><small>Enter a ticket number. Production can use a camera QR scanner.</small></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" onclick="verifyTicket(document.getElementById('verifyId').value.trim())">Verify</button></div>`)}
+function verifyTicket(id){const t=(data.tickets||[]).find(x=>x.id.toLowerCase()===String(id).toLowerCase());if(!t){return showToast('INVALID TICKET')};ticketStatus(t);closeModal();if(t.status==='ACTIVE')openModal('VALID TICKET',`<div class="alert success"><strong>✓ TICKET VALID</strong><small>${t.id} is active and can authorize ${t.service}.</small></div><div class="receipt"><b>Customer:</b> ${t.customer}<br><b>Service:</b> ${t.service}<br><b>Station:</b> ${t.station}<br><b>Amount:</b> ${money(t.amount)}</div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Close</button><button class="btn" onclick="useTicket('${t.id}')">Authorize / Use</button></div>`);else openModal('Ticket Status',`<div class="alert"><strong>${t.status}</strong><small>This ticket cannot be used for a new service.</small></div><div class="modal-actions"><button class="btn" onclick="closeModal()">Close</button></div>`)}
+function useTicket(id){const t=(data.tickets||[]).find(x=>x.id===id);if(!t)return;if(ticketStatus(t)!=='ACTIVE')return showToast(`Ticket is ${t.status}`);t.status='USED';t.usedAt=new Date().toLocaleString();save();closeModal();renderTickets();showToast(`${t.id} marked USED`)}
+async function renderHardware(){
+ const bridge=document.getElementById('hwBridge'); if(!bridge)return;
+ if(!window.spiroHardware){bridge.textContent='Web only';bridge.className='stat-value';return}
+ try{const x=await window.spiroHardware.status();document.getElementById('hwPrinters').textContent=x.printers.length;document.getElementById('hwSerial').textContent=x.serialPorts.length;document.getElementById('hwDevices').textContent=x.devices.length;bridge.textContent='Ready';bridge.className='stat-value';
+ const sel=document.getElementById('hwPrinterSelect');sel.innerHTML='<option value="">Select detected printer</option>'+x.printers.map(p=>`<option value="${String(p.name).replaceAll('"','&quot;')}">${p.name}${p.default?' (Default)':''}</option>`).join('');
+ document.getElementById('hwSerialList').innerHTML=x.serialPorts.length?x.serialPorts.map(p=>`<div class="alert"><strong>${p.path}</strong><small>${p.name||p.manufacturer||'Serial device'} ${p.vendorId?`· VID ${p.vendorId}`:''} ${p.productId?`· PID ${p.productId}`:''}</small></div>`).join(''):'<div class="empty">No serial ports detected.</div>';
+ document.getElementById('hwDeviceList').innerHTML=x.devices.length?x.devices.slice(0,30).map(d=>`<div class="alert"><strong>${d.status} · ${d.class}</strong><small>${d.name||d.id}</small></div>`).join(''):'<div class="empty">No USB/Bluetooth devices detected.</div>';
+ }catch(e){bridge.textContent='Error';showToast(e.message)}
+}
+async function refreshHardware(){await renderHardware();showToast('Hardware inventory refreshed')}
+function receiptText(){return ['SPIRO KAREN','TEST RECEIPT','------------------------------','Battery Swap          KES 150','------------------------------','Thank you.','Device test only','\n'].join('\n')}
+async function testWindowsPrint(){if(!window.spiroHardware)return showToast('Windows hardware bridge unavailable');const n=document.getElementById('hwPrinterSelect').value;if(!n)return showToast('Select a Windows printer first');try{await window.spiroHardware.printWindows(n,receiptText());showToast('Test receipt sent to printer')}catch(e){showToast('Print failed: '+e.message)}}
+async function testNetworkPrint(){if(!window.spiroHardware)return showToast('Windows hardware bridge unavailable');const h=document.getElementById('hwPrinterHost').value.trim(),p=+document.getElementById('hwPrinterPort').value||9100;if(!h)return showToast('Enter printer IP / hostname');try{await window.spiroHardware.printNetwork(h,p,['SPIRO KAREN','TEST RECEIPT','------------------------------','Battery Swap          KES 150','------------------------------','Thank you.']);showToast('LAN test receipt sent')}catch(e){showToast('LAN print failed: '+e.message)}}
+async function openNetworkDrawer(){if(!window.spiroHardware)return showToast('Windows hardware bridge unavailable');const h=document.getElementById('hwDrawerHost').value.trim(),p=+document.getElementById('hwDrawerPort').value||9100;if(!h)return showToast('Enter printer IP / hostname');try{await window.spiroHardware.openDrawerNetwork(h,p);showToast('Cash drawer pulse sent')}catch(e){showToast('Drawer failed: '+e.message)}}
+function simulateTelemetry(){data.batteries.forEach(b=>{if(b.status==='Charging')b.soc=Math.min(100,b.soc+Math.floor(Math.random()*5)+1);if(b.status==='Available')b.soc=Math.max(45,Math.min(100,b.soc+(Math.random()>.5?1:-1)));b.temp=Math.max(24,Math.min(39,b.temp+(Math.random()>.5?1:-1)));});data.stations.forEach(s=>{if(Math.random()<.05)s.online=!s.online});save();render();showToast('IoT telemetry updated')}
+function simulateFault(){data.alerts.unshift({type:'danger',title:'Demo station communication alert',text:'ST-002 MQTT heartbeat delayed. This is a simulated fault.'});save();render();showToast('Test alert generated')}
+function dismissAlert(i){data.alerts.splice(i,1);save();render()}
+function savePricing(){data.pricing={swap:+document.getElementById('priceSwap').value,kwh:+document.getElementById('priceKwh').value,monthly:+document.getElementById('priceMonthly').value};save();showToast('Pricing saved')}
+function saveSettings(){data.company=document.getElementById('companyName').value;data.currency=document.getElementById('currency').value;data.mqtt=document.getElementById('mqtt').value;data.gateway=document.getElementById('gateway').value;data.telemetry=Math.max(1,+document.getElementById('telemetry').value);save();showToast('Settings saved')}
+function exportCSV(){const rows=[['Time','Driver','Station','Old Battery','New Battery','Amount','Status'],...data.swaps.map(x=>[x.time,x.driver,x.station,x.old,x.new,x.amount,x.status])];const csv=rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='spiro-karen-swaps.csv';a.click();showToast('CSV exported')}
+document.getElementById('posProductSearch')?.addEventListener('input',renderPOS);document.getElementById('posCategory')?.addEventListener('change',renderPOS);document.getElementById('ticketSearch')?.addEventListener('input',renderTickets);document.getElementById('ticketStatus')?.addEventListener('change',renderTickets);document.getElementById('ticketType')?.addEventListener('change',renderTickets);document.getElementById('batteryFilter').addEventListener('input',renderBatteries);document.getElementById('batteryStatus').addEventListener('change',renderBatteries);document.getElementById('driverFilter').addEventListener('input',renderDrivers);
+document.getElementById('globalSearch').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('.page.active tbody tr,.page.active .station-card,.page.active .alert').forEach(el=>el.style.display=!q||el.textContent.toLowerCase().includes(q)?'':'none')});
+setInterval(()=>simulateTelemetry(),Math.max(2000,data.telemetry*1000));
+render();
+if(window.spiroHardware) renderHardware();
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+<script>
+(async function(){
+  const el=document.getElementById('apiStatus');
+  try{const r=await fetch('/api/health');const j=await r.json();el.textContent='● API '+(j.mode==='postgresql'?'PostgreSQL connected':'demo data mode');el.style.color='#86efac';}catch(e){el.textContent='● Offline / browser demo';el.style.color='#fbbf24';}
+})();
+</script>
+</body>
+</html>
